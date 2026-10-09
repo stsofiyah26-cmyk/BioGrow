@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jelajah Dunia Makhluk Hidup</title>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* === VARIABEL WARNA PASTEL === */
+        :root {
+            --sage-green: #9CAF88;
+            --dark-sage: #7A8B68;
+            --cream: #FDFBF7;
+            --white: #FFFFFF;
+            --pastel-yellow: #FFF3CD;
+            --pastel-pink: #F8D7DA;
+            --pastel-blue: #D1ECF1;
+            --text-dark: #4A4A4A;
+            --text-light: #7A7A7A;
+        }
+
+        /* === GAYA DASAR === */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        body {
+            background-color: var(--cream);
+            color: var(--text-dark);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Container Utama Media Pembelajaran */
+        #app-container {
+            width: 100%;
+            max-width: 800px;
+            min-height: 100vh;
+            background-color: var(--white);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* === TRANSISI HALAMAN === */
+        .page {
+            display: none;
+            flex-direction: column;
+            flex-grow: 1;
+            padding: 30px 20px 80px 20px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        .page.active {
+            display: flex;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* === TOMBOL & NAVIGASI === */
+        .btn {
+            background-color: var(--sage-green);
+            color: var(--white);
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-decoration: none;
+        }
+        .btn:hover {
+            background-color: var(--dark-sage);
+            transform: scale(1.05);
+        }
+        .btn-outline {
+            background-color: transparent;
+            color: var(--sage-green);
+            border: 2px solid var(--sage-green);
+        }
+        .btn-outline:hover {
+            background-color: var(--sage-green);
+            color: var(--white);
+        }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            max-width: 800px;
+            background-color: var(--white);
+            padding: 15px 20px;
+            box-shadow: 0 -5px 15px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 100;
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        /* === HALAMAN PEMBUKA === */
+        #page-opening {
+            text-align: center;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, var(--cream) 0%, var(--white) 100%);
+        }
+        .opening-title {
+            color: var(--dark-sage);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .opening-subtitle {
+            color: var(--text-light);
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+        }
+        .opening-illustration {
+            font-size: 5rem;
+            margin-bottom: 30px;
+            animation: bounce 2s infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .btn-start {
+            font-size: 1.5rem;
+            padding: 15px 40px;
+            border-radius: 30px;
+            background-color: var(--sage-green);
+            box-shadow: 0 4px 15px rgba(156, 175, 136, 0.4);
+        }
+
+        /* === MENU UTAMA === */
+        .menu-title {
+            text-align: center;
+            color: var(--dark-sage);
+            margin-bottom: 30px;
+            font-size: 2rem;
+        }
+        .menu-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        .menu-card {
+            background-color: var(--white);
+            border: 2px solid var(--pastel-yellow);
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 10px rgba(0,0,0,0.02);
+        }
+        .menu-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+            border-color: var(--sage-green);
+        }
+        .menu-icon {
+            font-size: 3rem;
+            background-color: var(--pastel-yellow);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 20px;
+        }
+        .menu-card:nth-child(2) .menu-icon { background-color: var(--pastel-pink); }
+        .menu-card:nth-child(3) .menu-icon { background-color: var(--pastel-blue); }
+        .menu-info h3 { color: var(--dark-sage); font-size: 1.4rem; margin-bottom: 5px; }
+        .menu-info p { color: var(--text-light); font-size: 0.95rem; }
+
+        /* === MATERI === */
+        .materi-section {
+            display: none;
+            animation: fadeIn 0.4s;
+        }
+        .materi-section.active { display: block; }
+        .materi-header {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--dark-sage);
+            border-bottom: 2px dashed var(--sage-green);
+            padding-bottom: 15px;
+        }
+        .content-box {
+            background-color: var(--pastel-yellow);
+            padding: 15px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+        }
+        .content-box h4 { margin-bottom: 8px; color: var(--dark-sage); }
+        ul.cute-list { list-style: none; padding-left: 0; }
+        ul.cute-list li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 30px;
+        }
+        ul.cute-list li::before {
+            content: "🌿";
+            position: absolute;
+            left: 0;
+            top: 0;
+        }
+        /* Tabel Metamorfosis */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+            background-color: var(--white);
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--cream);
+        }
+        th { background-color: var(--sage-green); color: var(--white); }
+        tr:nth-child(even) { background-color: #FAFAFA; }
+
+        /* Video Container */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+            height: 0;
+            overflow: hidden;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        /* === GAME & IFRAME === */
+        .iframe-wrapper {
+            width: 100%;
+            height: 400px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 2px solid var(--sage-green);
+        }
+        .iframe-wrapper iframe { width: 100%; height: 100%; border: none; }
+        .center-text { text-align: center; margin-bottom: 15px; }
